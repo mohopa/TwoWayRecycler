@@ -51,6 +51,7 @@ public class TwoWayRecyclerView extends FrameLayout {
 
     protected OnMoreListener mOnMoreListener;
     protected boolean isLoadingMore;
+    protected boolean isLoadingMoreTop;
     protected SwipeRefreshLayout mPtrLayout;
 
     protected int mSuperRecyclerViewMainLayout;
@@ -223,12 +224,12 @@ public class TwoWayRecyclerView extends FrameLayout {
                 mOnMoreListener.onMoreAsked(mRecycler.getAdapter().getItemCount(), ITEM_LEFT_TO_LOAD_MORE, lastVisibleItemPosition);
             }
         }
-        
+
         if (firstVisibleItemPosition != RecyclerView.NO_POSITION
                 && firstVisibleItemPosition <= ITEM_LEFT_TO_REACH_TOP
-                && !isLoadingMore
+                && !isLoadingMoreTop
                 && !isReachedRealTop) {
-            isLoadingMore = true;
+            isLoadingMoreTop = true;
             if (mOnMoreListener != null) {
                 mMoreProgress.setVisibility(View.VISIBLE);
                 mOnMoreListener.onReachTop(mRecycler.getAdapter().getItemCount(), ITEM_LEFT_TO_REACH_TOP, firstVisibleItemPosition);
@@ -376,6 +377,7 @@ public class TwoWayRecyclerView extends FrameLayout {
                     mProgress.setVisibility(View.GONE);
                     mMoreProgress.setVisibility(View.GONE);
                     isLoadingMore = false;
+                    isLoadingMoreTop = false;
                     mPtrLayout.setRefreshing(false);
                     if (mRecycler.getAdapter().getItemCount() == 0 && mEmptyId != 0) {
                         mEmpty.setVisibility(View.VISIBLE);
@@ -569,11 +571,22 @@ public class TwoWayRecyclerView extends FrameLayout {
         return isLoadingMore;
     }
 
+    public boolean isLoadingMoreTop() {
+        return isLoadingMoreTop;
+    }
+
     /**
      * Enable/Disable the More event
      */
     public void setLoadingMore(boolean isLoadingMore) {
         this.isLoadingMore = isLoadingMore;
+    }
+
+    /**
+     * Enable/Disable the Reach Top event
+     */
+    public void setLoadingMoreTop(boolean isLoadingMore) {
+        this.isLoadingMoreTop = isLoadingMore;
     }
 
     /**
