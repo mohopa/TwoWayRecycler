@@ -222,7 +222,9 @@ public class TwoWayRecyclerView extends FrameLayout {
                 mMoreProgress.setVisibility(View.VISIBLE);
                 mOnMoreListener.onMoreAsked(mRecycler.getAdapter().getItemCount(), ITEM_LEFT_TO_LOAD_MORE, lastVisibleItemPosition);
             }
-        } else if (firstVisibleItemPosition != RecyclerView.NO_POSITION
+        }
+        
+        if (firstVisibleItemPosition != RecyclerView.NO_POSITION
                 && firstVisibleItemPosition <= ITEM_LEFT_TO_REACH_TOP
                 && !isLoadingMore
                 && !isReachedRealTop) {
