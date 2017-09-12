@@ -51,7 +51,7 @@ public class TwoWayRecyclerView extends FrameLayout {
 
     protected OnMoreListener mOnMoreListener;
     protected boolean isLoadingMore;
-    protected boolean isLoadingMoreTop;
+    //protected boolean isLoadingMoreTop;
     protected SwipeRefreshLayout mPtrLayout;
 
     protected int mSuperRecyclerViewMainLayout;
@@ -227,9 +227,11 @@ public class TwoWayRecyclerView extends FrameLayout {
 
         if (firstVisibleItemPosition != RecyclerView.NO_POSITION
                 && firstVisibleItemPosition <= ITEM_LEFT_TO_REACH_TOP
-                && !isLoadingMoreTop
+                //&& !isLoadingMoreTop
+                && !isLoadingMore
                 && !isReachedRealTop) {
-            isLoadingMoreTop = true;
+            //isLoadingMoreTop = true;
+            isLoadingMore = true;
             if (mOnMoreListener != null) {
                 mMoreProgress.setVisibility(View.VISIBLE);
                 mOnMoreListener.onReachTop(mRecycler.getAdapter().getItemCount(), ITEM_LEFT_TO_REACH_TOP, firstVisibleItemPosition);
@@ -374,13 +376,13 @@ public class TwoWayRecyclerView extends FrameLayout {
                 }
 
                 private void update() {
-                    if (isLoadingMoreTop && isLoadingMore)
-                        return;//both called together so wait until both of them finished
+                    //if (isLoadingMoreTop && isLoadingMore)
+                    //    return;//both called together so wait until both of them finished
 
                     mProgress.setVisibility(View.GONE);
                     mMoreProgress.setVisibility(View.GONE);
                     isLoadingMore = false;
-                    isLoadingMoreTop = false;
+                    //isLoadingMoreTop = false;
                     mPtrLayout.setRefreshing(false);
                     if (mRecycler.getAdapter().getItemCount() == 0 && mEmptyId != 0) {
                         mEmpty.setVisibility(View.VISIBLE);
@@ -574,9 +576,9 @@ public class TwoWayRecyclerView extends FrameLayout {
         return isLoadingMore;
     }
 
-    public boolean isLoadingMoreTop() {
+    /*public boolean isLoadingMoreTop() {
         return isLoadingMoreTop;
-    }
+    }*/
 
     /**
      * Enable/Disable the More event
@@ -588,9 +590,9 @@ public class TwoWayRecyclerView extends FrameLayout {
     /**
      * Enable/Disable the Reach Top event
      */
-    public void setLoadingMoreTop(boolean isLoadingMore) {
+    /*public void setLoadingMoreTop(boolean isLoadingMore) {
         this.isLoadingMoreTop = isLoadingMore;
-    }
+    }*/
 
     /**
      * Remove the moreListener
